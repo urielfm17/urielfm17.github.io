@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nuestra Historia de Amor - Deysi</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(135deg, #fcefee 0%, #f9d5d3 100%);
+        color: #4a2c2a;
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px 15px 60px;
+    }
+
+    /* Login Screen - diseño original */
+    .login-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #000000 0%, #2d2d2d 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 0.5s ease;
+    }
+
+    .login-form {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 40px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .login-form h2 {
+        margin-bottom: 30px;
+        font-size: 28px;
+        color: #ff6b6b;
+    }
+
+    .login-input {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 16px;
+    }
+
+    .login-input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .login-btn {
+        background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Header */
+    .header {
+        text-align: center;
+        padding: 50px 20px 40px;
+        background: rgba(255, 182, 193, 0.3);
+        border-radius: 30px;
+        box-shadow: 0 8px 15px rgba(255, 182, 193, 0.4);
+        margin-bottom: 50px;
+        user-select: none;
+    }
+
+    .header h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 4rem;
+        color: #d94f4f;
+        text-shadow: 2px 2px 6px #f9b5b5;
+        margin-bottom: 10px;
+    }
+
+    .date-counter {
+        font-size: 1.3rem;
+        color: #7a4a4a;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* Navigation */
+    .nav {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 50px;
+        flex-wrap: wrap;
+    }
+
+    .nav-btn {
+        background: #f9b5b5;
+        border: none;
+        color: #6b2a2a;
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(217, 79, 79, 0.4);
+        transition: all 0.3s ease;
+        user-select: none;
+        letter-spacing: 0.05em;
+    }
+
+    .nav-btn:hover {
+        background: #d94f4f;
+        color: #fff;
+        box-shadow: 0 6px 15px rgba(217, 79, 79, 0.7);
+        transform: translateY(-3px);
+    }
+
+    .nav-btn.active {
+        background: #d94f4f;
+        color: #fff;
+        box-shadow: 0 6px 15px rgba(217, 79, 79, 0.7);
+        transform: translateY(-3px);
+    }
+
+    /* Content Sections */
+    .content-section {
+        display: none;
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Moments Album Grid */
+    .moments-grid {
+        column-count: 3;
+        column-gap: 25px;
+        max-width: 100%;
+    }
+
+    @media (max-width: 900px) {
+        .moments-grid {
+            column-count: 2;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .moments-grid {
+            column-count: 1;
+        }
+    }
+
+    /* Moment Card as Polaroid style */
+    .moment-card {
+        background: #fff0f2;
+        margin-bottom: 25px;
+        display: inline-block;
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 8px 15px rgba(217, 79, 79, 0.3);
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        break-inside: avoid;
+        user-select: none;
+        filter: drop-shadow(0 4px 4px rgba(217, 79, 79, 0.15));
+        transform-origin: center bottom;
+        animation: floatIn 0.6s ease forwards;
+    }
+
+    /* Rotaciones aleatorias para efecto álbum */
+    .moment-card:nth-child(3n) {
+        transform: rotate(-3deg);
+    }
+    .moment-card:nth-child(3n+1) {
+        transform: rotate(2deg);
+    }
+    .moment-card:nth-child(3n+2) {
+        transform: rotate(-1deg);
+    }
+
+    .moment-card:hover {
+        transform: rotate(0deg) scale(1.05);
+        box-shadow: 0 12px 25px rgba(217, 79, 79, 0.6);
+        z-index: 10;
+    }
+
+    @keyframes floatIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px) rotate(0deg);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+    }
+
+    .moment-image {
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        object-fit: cover;
+        height: 220px;
+        display: block;
+        user-select: none;
+    }
+
+    /* Pie de foto estilo polaroid */
+    .moment-caption {
+        padding: 15px 20px 20px;
+        font-family: 'Great Vibes', cursive;
+        font-size: 1.3rem;
+        color: #b94a4a;
+        text-align: center;
+        user-select: none;
+        min-height: 60px;
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(217, 79, 79, 0.85);
+        backdrop-filter: blur(8px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        background: #fff0f2;
+        border-radius: 25px;
+        max-width: 520px;
+        width: 90%;
+        padding: 30px 35px;
+        box-shadow: 0 0 30px rgba(217, 79, 79, 0.7);
+        position: relative;
+        font-family: 'Montserrat', sans-serif;
+        color: #6b2a2a;
+        user-select: text;
+        animation: modalPop 0.4s ease forwards;
+    }
+
+    @keyframes modalPop {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .modal-image {
+        width: 100%;
+        max-height: 320px;
+        object-fit: contain;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        user-select: none;
+        box-shadow: 0 8px 20px rgba(217, 79, 79, 0.3);
+    }
+
+    .modal-title {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        color: #d94f4f;
+        text-align: center;
+        user-select: text;
+    }
+
+    .modal-date {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #b94a4a;
+        text-align: center;
+        margin-bottom: 20px;
+        user-select: text;
+    }
+
+    .modal-description {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #7a4a4a;
+        white-space: pre-wrap;
+        margin-bottom: 30px;
+        user-select: text;
+    }
+
+    .modal-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        font-size: 2.5rem;
+        color: #d94f4f;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        user-select: none;
+    }
+
+    .modal-close-btn:hover {
+        color: #b94a4a;
+    }
+
+    .delete-btn-modal {
+        background: #d94f4f;
+        color: white;
+        border: none;
+        padding: 14px 0;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        font-weight: 700;
+        width: 100%;
+        box-shadow: 0 6px 15px rgba(217, 79, 79, 0.7);
+        transition: background 0.3s ease;
+        user-select: none;
+    }
+
+    .delete-btn-modal:hover {
+        background: #b94a4a;
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #b94a4a;
+        font-family: 'Great Vibes', cursive;
+        font-size: 2rem;
+        user-select: none;
+    }
+
+    footer {
+        text-align: center;
+        padding: 40px 0;
+        color: #7a4a4a;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 60px;
+        user-select: none;
+    }
+
+    /* Form styles (Add Moment) */
+    .add-moment-form {
+        background: #fff0f2;
+        padding: 35px 40px;
+        border-radius: 25px;
+        box-shadow: 0 8px 20px rgba(217, 79, 79, 0.3);
+        max-width: 600px;
+        margin: 0 auto 60px;
+        color: #6b2a2a;
+        font-weight: 600;
+    }
+
+    .form-title {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2.8rem;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #d94f4f;
+        user-select: none;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #7a4a4a;
+        user-select: none;
+    }
+
+    .form-input, .form-textarea {
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: 15px;
+        border: 2px solid #f9b5b5;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #6b2a2a;
+        font-family: 'Montserrat', sans-serif;
+        transition: border-color 0.3s ease;
+        background: #fff0f2;
+        resize: vertical;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+        outline: none;
+        border-color: #d94f4f;
+        background: #ffe6e9;
+    }
+
+    .file-input-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .file-input {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .file-input-label {
+        display: block;
+        padding: 14px;
+        background: #f9b5b5;
+        border-radius: 15px;
+        text-align: center;
+        cursor: pointer;
+        font-weight: 700;
+        color: #6b2a2a;
+        transition: background 0.3s ease;
+        user-select: none;
+    }
+
+    .file-input-label:hover {
+        background: #d94f4f;
+        color: #fff;
+    }
+
+    .submit-btn {
+        background: #d94f4f;
+        color: white;
+        padding: 16px 0;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1.3rem;
+        font-weight: 700;
+        width: 100%;
+        box-shadow: 0 6px 15px rgba(217, 79, 79, 0.7);
+        transition: background 0.3s ease, transform 0.3s ease;
+        user-select: none;
+    }
+
+    .submit-btn:hover {
+        background: #b94a4a;
+        transform: translateY(-3px);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .header h1 {
+            font-size: 3rem;
+        }
+        .moments-grid {
+            column-count: 1;
+        }
+        .moment-image {
+            height: 180px;
+        }
+        .modal-content {
+            padding: 25px 20px;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-form">
+            <h2>💖 Bienvenida Mi Amor</h2>
+            <input type="text" id="nameInput" class="login-input" placeholder="Tu nombre" onkeypress="handleKeyPress(event)" />
+            <input type="number" id="dateInput" class="login-input" placeholder="Número especial" onkeypress="handleKeyPress(event)" />
+            <input type="text" id="colorInput" class="login-input" placeholder="Color favorito" onkeypress="handleKeyPress(event)" />
+            <button class="login-btn" onclick="checkLogin()">Entrar a Nuestro Mundo</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent" style="display:none; opacity:0;">
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <h1>Nuestra Historia de Amor</h1>
+                <div class="date-counter" id="dateCounter"></div>
+            </header>
+
+            <!-- Navigation -->
+            <nav class="nav">
+                <button class="nav-btn active" onclick="showSection('moments')">Nuestros Momentos</button>
+                <button class="nav-btn" onclick="showSection('add-moment')">Agregar Momento</button>
+                <button class="nav-btn" onclick="showSection('gallery')">Galería de Fotos</button>
+            </nav>
+
+            <!-- Moments Section -->
+            <section id="moments" class="content-section active">
+                <div class="moments-grid" id="momentsGrid">
+                    <!-- Moments will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Add Moment Section -->
+            <section id="add-moment" class="content-section">
+                <div class="add-moment-form">
+                    <h2 class="form-title">Crear Nuevo Recuerdo</h2>
+                    <div class="form-group">
+                        <label class="form-label">Título del momento</label>
+                                              <input type="text" id="momentTitle" class="form-input" placeholder="Ej: Nuestra primera cita" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Fecha</label>
+                        <input type="date" id="momentDate" class="form-input" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Descripción</label>
+                        <textarea id="momentDescription" class="form-textarea" placeholder="Cuenta este momento especial..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Foto (opcional)</label>
+                        <div class="file-input-container">
+                            <input type="file" id="momentPhoto" class="file-input" accept="image/*" />
+                            <label for="momentPhoto" class="file-input-label">Seleccionar foto</label>
+                        </div>
+                    </div>
+                    <button class="submit-btn" onclick="addMoment()">Guardar Recuerdo</button>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="content-section">
+                <div class="moments-grid" id="galleryGrid">
+                    <!-- Gallery items will be loaded here -->
+                </div>
+            </section>
+
+            <footer>
+                <p>Nuestro amor crece cada día - Hecho con 💖 para Deysi</p>
+                <p>© 2024 - Para toda la vida</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal para mostrar info del momento -->
+    <div class="modal-overlay" id="momentModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal" onclick="closeModal()">&times;</button>
+            <img src="" alt="" class="modal-image" id="modalImage" />
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <div class="modal-date" id="modalDate"></div>
+            <p class="modal-description" id="modalDescription"></p>
+            <button class="delete-btn-modal" id="modalDeleteBtn">Eliminar este momento</button>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkLogin();
+            }
+        }
+
+        function checkLogin() {
+            const name = document.getElementById('nameInput').value.toLowerCase();
+            const date = document.getElementById('dateInput').value;
+            const color = document.getElementById('colorInput').value.toLowerCase();
+
+            if (name === 'deysi' && date === '7' && color === 'negro') {
+                document.getElementById('loginScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    const mainContent = document.getElementById('mainContent');
+                    mainContent.style.display = 'block';
+                    setTimeout(() => {
+                        mainContent.style.opacity = '1';
+                        // Load saved moments
+                        loadMoments();
+                        // Update date counter
+                        updateDateCounter();
+                        setInterval(updateDateCounter, 60000);
+                    }, 100);
+                }, 500);
+            } else {
+                alert('¡Ups! Revisa los datos mi amor. Pista: tu nombre es Deysi, nuestro número es 7 y tu color favorito es negro.');
+            }
+        }
+
+        // Date counter calculation
+        function updateDateCounter() {
+            const startDate = new Date('2024-09-07');
+            const currentDate = new Date();
+            
+            const diffTime = Math.abs(currentDate - startDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('dateCounter').textContent = 
+                `Llevamos juntos: ${diffDays} días, ${diffHours} horas y ${diffMinutes} minutos de puro amor`;
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active nav button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.nav-btn[onclick="showSection('${sectionId}')"]`).classList.add('active');
+            
+            // If showing gallery, refresh it
+            if (sectionId === 'gallery') {
+                loadGallery();
+            }
+        }
+
+        // Save moment to localStorage
+        function addMoment() {
+            const title = document.getElementById('momentTitle').value.trim();
+            const date = document.getElementById('momentDate').value;
+            const description = document.getElementById('momentDescription').value.trim();
+            const photoInput = document.getElementById('momentPhoto');
+            
+            if (!title || !date || !description) {
+                alert('Por favor, completa todos los campos obligatorios.');
+                return;
+            }
+
+            const moment = {
+                id: Date.now(),
+                title,
+                date,
+                description,
+                photo: null,
+                createdAt: new Date().toISOString()
+            };
+
+            // Handle photo upload
+            if (photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    moment.photo = e.target.result;
+                    saveMoment(moment);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveMoment(moment);
+            }
+        }
+
+        function saveMoment(moment) {
+            let moments = JSON.parse(localStorage.getItem('loveMoments') || '[]');
+            moments.unshift(moment); // Add to beginning
+            localStorage.setItem('loveMoments', JSON.stringify(moments));
+            
+            // Clear form
+            document.getElementById('momentTitle').value = '';
+            document.getElementById('momentDate').value = '';
+            document.getElementById('momentDescription').value = '';
+            document.getElementById('momentPhoto').value = '';
+            
+            // Show success message and switch to moments view
+            alert('¡Momento guardado con éxito! 💖');
+            showSection('moments');
+            loadMoments();
+        }
+
+        // Load moments from localStorage and render cards with click event to open modal
+        function loadMoments() {
+            const moments = JSON.parse(localStorage.getItem('loveMoments') || '[]');
+            const grid = document.getElementById('momentsGrid');
+            
+            if (moments.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>¡Aún no hay momentos!</h3>
+                        <p>Comienza creando tu primer recuerdo especial 💕</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = moments.map(moment => {
+                const imgSrc = moment.photo ? moment.photo : 'https://via.placeholder.com/300x220?text=Sin+Foto';
+                return `
+                    <div class="moment-card" tabindex="0" role="button" aria-pressed="false" onclick="openModal(${moment.id})" onkeypress="if(event.key==='Enter'){openModal(${moment.id})}">
+                        <img src="${imgSrc}" class="moment-image" alt="${moment.title}" />
+                        <div class="moment-caption">${moment.title}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Load gallery (only photos)
+        function loadGallery() {
+            const moments = JSON.parse(localStorage.getItem('loveMoments') || '[]');
+            const photos = moments.filter(moment => moment.photo);
+            const grid = document.getElementById('galleryGrid');
+            
+            if (photos.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>¡Aún no hay fotos!</h3>
+                        <p>Agrega momentos con fotos para verlas aquí 📸</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = photos.map(moment => `
+                <div class="moment-card" tabindex="0" role="button" aria-pressed="false" onclick="openModal(${moment.id})" onkeypress="if(event.key==='Enter'){openModal(${moment.id})}">
+                    <img src="${moment.photo}" class="moment-image" alt="${moment.title}">
+                    <div class="moment-caption">${moment.title}</div>
+                </div>
+            `).join('');
+        }
+
+        // Modal functionality
+        const modal = document.getElementById('momentModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDate = document.getElementById('modalDate');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalDeleteBtn = document.getElementById('modalDeleteBtn');
+
+        let currentMomentId = null;
+
+        function openModal(id) {
+            const moments = JSON.parse(localStorage.getItem('loveMoments') || '[]');
+            const moment = moments.find(m => m.id === id);
+            if (!moment) return;
+
+            currentMomentId = id;
+
+            modalImage.src = moment.photo ? moment.photo : 'https://via.placeholder.com/500x320?text=Sin+Foto';
+            modalImage.alt = moment.title;
+            modalTitle.textContent = moment.title;
+            modalDate.textContent = formatDate(moment.date);
+            modalDescription.textContent = moment.description;
+
+            modal.classList.add('active');
+
+            // Focus modal close button for accessibility
+            document.querySelector('.modal-close-btn').focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            currentMomentId = null;
+        }
+
+        // Delete moment from modal
+        modalDeleteBtn.addEventListener('click', () => {
+            if (currentMomentId === null) return;
+            if (confirm('¿Estás segura de que quieres eliminar este momento?')) {
+                let moments = JSON.parse(localStorage.getItem('loveMoments') || '[]');
+                moments = moments.filter(moment => moment.id !== currentMomentId);
+                localStorage.setItem('loveMoments', JSON.stringify(moments));
+                closeModal();
+                loadMoments();
+                loadGallery();
+            }
+        });
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Initialize page
+        window.onload = function() {
+            document.getElementById('nameInput').focus();
+            
+            // Set today's date as default in the form
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('momentDate').value = today;
+        };
+    </script>
+</body>
+</html>
