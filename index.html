@@ -525,9 +525,9 @@
     <div class="login-screen" id="loginScreen">
         <div class="login-form">
             <h2>💖 Bienvenida Mi Amor</h2>
-            <input type="text" id="nameInput" class="login-input" placeholder="Tu nombre" onkeypress="handleKeyPress(event)" />
+            <input type="text" id="nameInput" class="login-input" placeholder="Tu nombre" onkeypress="handleKeyPress(event)"  pattern="[a-zA-z]"/>
             <input type="number" id="dateInput" class="login-input" placeholder="Número especial" onkeypress="handleKeyPress(event)" />
-            <input type="text" id="colorInput" class="login-input" placeholder="Color favorito" onkeypress="handleKeyPress(event)" />
+            <input type="text" id="colorInput" class="login-input" placeholder="Color favorito" onkeypress="handleKeyPress(event)" pattern="[a-zA-z]" />
             <button class="login-btn" onclick="checkLogin()">Entrar a Nuestro Mundo</button>
         </div>
     </div>
